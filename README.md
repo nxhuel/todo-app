@@ -1,32 +1,48 @@
 # API To-do List
+
 ## I - DESCRIPCIÓN
+
 Mediante este sistema web denominado To-do APP los usuarios fácilmente pueden crear, listar, editar, eliminar, marcar como completada y filtrar tareas por estado. El desarrollo del mismo tiene como objetivo mejorar la gestión y planificación de tareas mediante una API. Cualquier usuario frontend debe poder entender cómo realizar la conexión a su web [Ver Contrato de Endpoints si desea ir al grano]. El público objetivo es desarrolladores frontend.
+
 ## II- ANÁLISIS DE REQUERIMIENTOS
+
 ### A - REQUERIMIENTOS FUNCIONALES
+
 El usuario debe poder crear, listar, editar, eliminar, marcar como completada y filtrar tareas por estado
+
 ### B - REQUERIMIENTOS NO FUNCIONALES
-README: descripción del proyecto, cómo correrlo localmente, variables de entorno. 
-Swagger/OpenAPI: documentar cada endpoint con descripción, parámetros y respuestas. 
-Decisiones técnicas: por qué usaste DTOs, cómo manejás los errores. 
-Presentar Diagrama de entidades (db diagram.io) entre otros. 
+
+README: descripción del proyecto, cómo correrlo localmente, variables de entorno.
+Swagger/OpenAPI: documentar cada endpoint con descripción, parámetros y respuestas.
+Decisiones técnicas: por qué usaste DTOs, cómo manejás los errores.
+Presentar Diagrama de entidades (db diagram.io) entre otros.
+
 ### C - REQUERIMIENTOS TÉCNICOS
+
 Java 21
 Spring Boot 3
 MySQL
 Spring Data JPA
 Maven
 Docker
+
 ## III - DISEÑO DEL SISTEMA
+
 ### A - MODELO DE NEGOCIO
+
 Los negocios se generan a partir de suscripciones, el desarrollador que consume la API FREE puede elegir si poner suscripciones de inicio, poner máximo de tareas u optar por un modelo free.
+
 ### B - FLUJO TÍPICO DEL SISTEMA
+
 El usuario accede a la app y ve su lista de tareas pendientes.
 Crea una tarea nueva ingresando un título, descripción?, prioridad, categoría, y fecha_límite?.
 La tarea aparece en la lista principal.
 A medida que avanza, marca las tareas como completadas.
 Las tareas completadas se mueven a una sección separada o se tachan visualmente.
 Si una tarea ya no es relevante, la elimina directamente de la lista.
+
 ### C - CASOS DE USO
+
 | FLUJO PRINCIPAL - CREAR TAREA | CAMINOS ALTERNATIVOS |
 |--------------------------------|----------------------|
 | 1. u: Hace clic en “Nueva tarea” | 3a - Título vacío → El sistema muestra error de validación. El flujo vuelve al paso 3. |
@@ -35,7 +51,9 @@ Si una tarea ya no es relevante, la elimina directamente de la lista.
 | 4. u: Presiona "Guardar" | 5b - Sesión expirada → Redirige al login. La tarea redactada se preserva en localStorage. |
 | 5. s: Valida y persiste la tarea | |
 | 6. s: Muestra la tarea en la lista | |
-### D - DIAGRAMA ENTIDAD-RELACIÓN	
+
+### D - DIAGRAMA ENTIDAD-RELACIÓN
+
 Tabla: tbl_task
 
 | Columna     | Tipo de dato   | Notas                          |
@@ -51,6 +69,7 @@ Tabla: tbl_task
 | category    | VARCHAR(255)   | Categoría asignada             |
 
 F - CONTRATO DE ENDPOINTS
+
 | Método      | Endpoint       | descripción                    |
 |-------------|----------------|--------------------------------|
 | POST         | /api/tasks      | Crear tarea         |
@@ -60,8 +79,37 @@ F - CONTRATO DE ENDPOINTS
 | DELETE        | /api/tasks/1      | Eliminar una tarea por ID         |
 
 ## IV - IMPLEMENTACIÓN
+
 ### A - CONFIGURACIÓN Y EJECUCIÓN DEL SISTEMA
-Se deberá implementar Docker docker-compose para almacenar contenedor del código y base de datos. 
+#### Requisitos previos
+- [Java 21](https://adoptium.net/) instalado
+    - Spring Web
+    - Spring Boot DevTools
+    - MySQL Driver
+    - Spring Data JPA
+    - Lombok
+- [Maven](https://maven.apache.org/) instalado
+- [MySQL](https://dev.mysql.com/downloads/mysql/) corriendo en tu máquina
+- VS Code (opcional, pero recomendado)
 
-
-
+#### Configuración
+1. Clonar el repositorio
+   ```bash
+   git clone https://github.com/tuusuario/to-do-app.git
+   cd to-do-app
+   ```
+2. Crear la base de datos
+    `CREATE DATABASE todo_app;`
+3. Configurar variables de entorno. En VS Code usar .vscode/launch.json con tus variables
+    ```Json 
+    "env": {
+    "PORT_LOCAL": "8080",
+    "DB_URL": "jdbc:mysql://localhost:3306/todo_app?useSSL=false&serverTimezone=UTC",
+    "DB_USER": "tu_usuario",
+    "DB_PASSWORD": "tu_contraseña"
+    }
+    ```
+4. Ejecutar desde VS Code o desde la terminal
+    ```bash 
+    mvn spring-boot:run
+    ```
