@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.nxhu.todo.dto.request.TaskDtoReq;
 import com.nxhu.todo.dto.response.TaskDtoRes;
+import com.nxhu.todo.mapper.TaskMapper;
 import com.nxhu.todo.persistence.entity.PriorityEnum;
 import com.nxhu.todo.persistence.entity.TaskEntity;
 import com.nxhu.todo.persistence.repository.ITaskRepository;
@@ -127,6 +128,22 @@ public class TaskServiceImpl implements ITaskService {
                 .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
 
         taskRepository.delete(taskEntity);
+    }
+
+    @Override
+    public List<TaskDtoRes> findByTitle(String title) {
+        return taskRepository.findByTitleContainingIgnoreCase(title)
+        .stream()
+        .map(TaskMapper::toDto)
+        .toList();
+    }
+
+    @Override
+    public List<TaskDtoRes> findByCompleted(boolean completed) {
+        return taskRepository.findByCompleted(completed)
+        .stream()
+        .map(TaskMapper::toDto)
+        .toList();
     };
 
 }

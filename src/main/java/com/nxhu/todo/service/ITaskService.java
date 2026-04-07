@@ -8,6 +8,7 @@ import com.nxhu.todo.dto.response.TaskDtoRes;
 
 public interface ITaskService {
 
+    // CRUD 
     TaskDtoRes createTask(TaskDtoReq taskDtoReq);
 
     List<TaskDtoRes> findAllTasks();
@@ -17,4 +18,9 @@ public interface ITaskService {
     TaskDtoRes patchTask(Long id, Map<String, Object> updates);
 
     void deleteTask(Long id);
+
+    // FILTROS
+    List<TaskDtoRes> findByTitle(String title);
+
+    List<TaskDtoRes> findByCompleted(boolean completed);
 }

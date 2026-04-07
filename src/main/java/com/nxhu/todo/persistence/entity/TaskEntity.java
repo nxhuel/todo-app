@@ -2,7 +2,6 @@ package com.nxhu.todo.persistence.entity;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -45,4 +44,6 @@ public class TaskEntity {
     private LocalDate createdAt;
 
     private LocalDate updatedAt;
+
+    private boolean deleted;
 }
