@@ -77,11 +77,14 @@ F - CONTRATO DE ENDPOINTS
 | GET         | /api/tasks/1      | Obtener una tarea por ID        |
 | PATCH         | /api/tasks/1      | Editar una tarea parcialmente por ID         |
 | DELETE        | /api/tasks/1      | Eliminar una tarea por ID         |
+| GET        | /api/tasks/filter/title?title=Hacer     | Filtrar tare por título         |
+| GET        | /api/tasks/filter/completed?completed=true     | Filtrar tarea por completado        |
 
 ## IV - IMPLEMENTACIÓN
 
 ### A - CONFIGURACIÓN Y EJECUCIÓN DEL SISTEMA
-#### Requisitos previos
+#### Alternativa 1: Código puro
+##### Requisitos previos
 - [Java 21](https://adoptium.net/) instalado
     - Spring Web
     - Spring Boot DevTools
@@ -92,7 +95,7 @@ F - CONTRATO DE ENDPOINTS
 - [MySQL](https://dev.mysql.com/downloads/mysql/) corriendo en tu máquina
 - VS Code (opcional, pero recomendado)
 
-#### Configuración
+##### Configuración
 1. Clonar el repositorio
    ```bash
    git clone https://github.com/tuusuario/to-do-app.git
@@ -113,3 +116,18 @@ F - CONTRATO DE ENDPOINTS
     ```bash 
     mvn spring-boot:run
     ```
+#### Alternativa 2: Uso de Docker Desktop
+##### Requisitos previos
+- Docker Desktop
+- Vs code
+- Postman 
+- DBeaver 
+- Git
+##### Configuración
+1. Clonar el repositorio
+```
+$ git clone https://github.com/tuusuario/to-do-app.git
+$ cd to-do-app
+```
+2. Levantar el contenedor 
+`$ docker-compose up --build -d`
