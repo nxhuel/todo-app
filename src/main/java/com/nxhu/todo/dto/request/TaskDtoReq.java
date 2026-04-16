@@ -6,6 +6,7 @@ import com.nxhu.todo.persistence.entity.PriorityEnum;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ import lombok.Setter;
 @Setter
 public class TaskDtoReq {
 
+    @NotBlank(message = "Title is required")
     private String title;
 
     private String description;

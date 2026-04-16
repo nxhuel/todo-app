@@ -5,8 +5,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nxhu.todo.dto.request.TaskDtoReq;
 import com.nxhu.todo.dto.response.TaskDtoRes;
+import com.nxhu.todo.exception.TaskNotFoundEx;
 import com.nxhu.todo.service.impl.TaskServiceImpl;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -30,7 +32,7 @@ public class TaskController {
     private final TaskServiceImpl taskService;
 
     @PostMapping("")
-    public ResponseEntity<TaskDtoRes> createTask(@RequestBody TaskDtoReq taskDtoReq) {
+    public ResponseEntity<TaskDtoRes> createTask(@Valid @RequestBody TaskDtoReq taskDtoReq) {
 
         TaskDtoRes response = taskService.createTask(taskDtoReq);
 
@@ -44,19 +46,19 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TaskDtoRes> findTaskById(@PathVariable Long id) {
+    public ResponseEntity<TaskDtoRes> findTaskById(@PathVariable Long id) throws TaskNotFoundEx {
         TaskDtoRes response = taskService.findTaskById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<TaskDtoRes> patchTask(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+    public ResponseEntity<TaskDtoRes> patchTask(@PathVariable Long id, @Valid @RequestBody Map<String, Object> updates) throws TaskNotFoundEx {
         TaskDtoRes response = taskService.patchTask(id, updates);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteTask(@PathVariable Long id) {
+    public ResponseEntity<String> deleteTask(@PathVariable Long id) throws TaskNotFoundEx {
         taskService.deleteTask(id);
         return new ResponseEntity<>("Task deleted successfully", HttpStatus.NO_CONTENT);
     }

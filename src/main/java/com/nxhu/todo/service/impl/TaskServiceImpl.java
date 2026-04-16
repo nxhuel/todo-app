@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.nxhu.todo.dto.request.TaskDtoReq;
 import com.nxhu.todo.dto.response.TaskDtoRes;
+import com.nxhu.todo.exception.TaskNotFoundEx;
 import com.nxhu.todo.mapper.TaskMapper;
 import com.nxhu.todo.persistence.entity.PriorityEnum;
 import com.nxhu.todo.persistence.entity.TaskEntity;
@@ -74,9 +75,9 @@ public class TaskServiceImpl implements ITaskService {
     }
 
     @Override
-    public TaskDtoRes findTaskById(Long id) {
+    public TaskDtoRes findTaskById(Long id) throws TaskNotFoundEx {
         TaskEntity taskEntity = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
+                .orElseThrow(() -> new TaskNotFoundEx("Task not found with id: " + id));
 
         TaskDtoRes taskDtoRes = new TaskDtoRes();
         taskDtoRes.setId(taskEntity.getId());
@@ -91,9 +92,9 @@ public class TaskServiceImpl implements ITaskService {
     }
 
     @Override
-    public TaskDtoRes patchTask(Long id, Map<String, Object> updates) {
+    public TaskDtoRes patchTask(Long id, Map<String, Object> updates) throws TaskNotFoundEx {
         TaskEntity taskEntity = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
+                .orElseThrow(() -> new TaskNotFoundEx("Task not found with id: " + id));
 
         updates.forEach((key, value) -> {
             switch (key) {
@@ -123,9 +124,9 @@ public class TaskServiceImpl implements ITaskService {
     }
 
     @Override
-    public void deleteTask(Long id) {
+    public void deleteTask(Long id) throws TaskNotFoundEx {
         TaskEntity taskEntity = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
+                .orElseThrow(() -> new TaskNotFoundEx("Task not found with id: " + id));
 
         taskRepository.delete(taskEntity);
     }
